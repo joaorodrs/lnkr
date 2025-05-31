@@ -6,16 +6,19 @@ import (
 )
 
 type LinkService interface {
-	CreateLink(URL string, title string) error
-	GetLink(ID int) (domain.Link, error)
+	CreateLink(URL string) error
+	GetLink(hash string) (domain.Link, error)
+	GetAllLinks() ([]domain.Link, error)
 }
 
 type LinkRepository interface {
-	CreateLink(URL string, title string) error
-	GetLink(ID int) (domain.Link, error)
+	CreateLink(URL string) error
+	GetLink(hash string) (domain.Link, error)
+	GetAllLinks() ([]domain.Link, error)
 }
 
 type LinkHandlers interface {
 	CreateLink(ctx *fiber.Ctx) error
 	GetLink(ctx *fiber.Ctx) error
+	GetAllLinks(ctx *fiber.Ctx) error
 }

@@ -27,7 +27,8 @@ func (s *Server) Initialize() {
 
 	linkRoutes := v1.Group("/link")
 	linkRoutes.Post("/", s.linkHandlers.CreateLink)
-	linkRoutes.Get("/r/:ID", s.linkHandlers.GetLink)
+	linkRoutes.Get("/", s.linkHandlers.GetAllLinks)
+	linkRoutes.Get("/r/:hash", s.linkHandlers.GetLink)
 
 	err := app.Listen(":5000")
 	if err != nil {

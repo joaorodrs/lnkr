@@ -20,21 +20,26 @@ func NewLinkService(linkRepository ports.LinkRepository) *LinkService {
 	}
 }
 
-func (s *LinkService) CreateLink(URL string, title string) error {
-	err := s.linkRepository.CreateLink(URL, title)
+func (s *LinkService) CreateLink(URL string) error {
+	err := s.linkRepository.CreateLink(URL)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *LinkService) GetLink(ID int) (domain.Link, error) {
-	link, err := s.linkRepository.GetLink(ID)
+func (s *LinkService) GetLink(hash string) (domain.Link, error) {
+	link, err := s.linkRepository.GetLink(hash)
 	if err != nil {
 		return domain.Link{}, err
 	}
 	if link.ID == "" || link.ID == uuid.Nil.String() {
-		return domain.Link{}, errors.New("link not found")
+		return domain.Link{}, errors.New("Link not found")
 	}
 	return link, nil
+}
+
+func (s *LinkService) GetAllLinks() ([]domain.Link, error) {
+	links, _ := s.linkRepository.GetAllLinks()
+	return links, nil
 }
