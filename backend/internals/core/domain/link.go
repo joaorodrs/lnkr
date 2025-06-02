@@ -1,5 +1,7 @@
 package domain
 
+import "errors"
+
 type Link struct {
 	ID           string `json:"id" validate:"required,uuid"`           // ID must be a valid UUID
 	URL          string `json:"url" validate:"required,url"`           // URL must be a valid URL format
@@ -7,6 +9,10 @@ type Link struct {
 }
 
 func NewLink(id, url, shortenedURL string) (*Link, error) {
+	if url == "" {
+		return nil, errors.New("URL is required")
+	}
+
 	link := &Link{
 		ID:           id,
 		URL:          url,

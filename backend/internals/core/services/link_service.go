@@ -1,9 +1,6 @@
 package services
 
 import (
-	"errors"
-
-	"github.com/google/uuid"
 	"github.com/joaorodrs/linker/internals/core/domain"
 	"github.com/joaorodrs/linker/internals/core/ports"
 )
@@ -33,13 +30,13 @@ func (s *LinkService) GetLink(hash string) (domain.Link, error) {
 	if err != nil {
 		return domain.Link{}, err
 	}
-	if link.ID == "" || link.ID == uuid.Nil.String() {
-		return domain.Link{}, errors.New("Link not found")
-	}
 	return link, nil
 }
 
 func (s *LinkService) GetAllLinks() ([]domain.Link, error) {
-	links, _ := s.linkRepository.GetAllLinks()
+	links, err := s.linkRepository.GetAllLinks()
+	if err != nil {
+		return nil, err
+	}
 	return links, nil
 }
