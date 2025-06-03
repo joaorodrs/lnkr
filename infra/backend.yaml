@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: joaopaulo/linker-backend:latest
+          image: linker-backend:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
           env:

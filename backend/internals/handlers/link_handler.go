@@ -30,9 +30,7 @@ func (h *LinkHandlers) CreateLink(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{"error": "Malparsed body JSON."})
 	}
 
-	err := h.linkService.CreateLink(p.URL)
-
-	if errors.Is(err, ErrInvalidPayload) {
+	if err := h.linkService.CreateLink(p.URL); errors.Is(err, ErrInvalidPayload) {
 		return ctx.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{"error": err.Error()})
 	} else if err != nil {
 		return ctx.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})

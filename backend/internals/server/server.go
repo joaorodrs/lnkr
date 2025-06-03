@@ -30,7 +30,7 @@ func (s *Server) Initialize() {
 	linkRoutes.Get("/", s.linkHandlers.GetAllLinks)
 	linkRoutes.Get("/r/:hash", s.linkHandlers.GetLink)
 
-	err := app.Listen(":5000")
+	err := app.Listen(":8080")
 	if err != nil {
 		log.Fatal(err)
 	}

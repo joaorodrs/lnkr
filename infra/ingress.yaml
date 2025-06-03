@@ -3,20 +3,22 @@ kind: Ingress
 metadata:
   name: linker-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: url.local # configure no seu /etc/hosts ou DNS
+    - host: url.local
       http:
         paths:
-          - path: /api/?(.*)
-            pathType: Prefix
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: backend-service
                 port:
                   number: 80
-          - path: /?(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
